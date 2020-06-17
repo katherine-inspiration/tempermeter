@@ -4,7 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var pgClient = require('./postgreClient');
+
 var app = express();
+const router = express.Router();
 
 
 
@@ -17,9 +20,21 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'build')));
 
+
+app.get('/api/history/results/:user_id', (req, res) => {
+  pgClient.getResultsHistory(req.params.user_id, res);
+});
+
+app.get('/api', (req, res) => {
+  res.json({text: "Hello, api!"})
+});
+
+
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
-})
+});
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
