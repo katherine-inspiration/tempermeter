@@ -1,2 +1,4 @@
 /Server/credentials.js
-/Client/tempermeter/gitcredentials.js
+/Client/tempermeter/credentials.js
+/Server/node_modules
+/Client/tempermeter/node_modules
