@@ -8,6 +8,7 @@ import Main from "./StyledComponents/Main";
 import { Route, Switch } from "react-router-dom";
 import HomeContainer from "./ContainerComponents/HomeContainer";
 import TestContainer from "./ContainerComponents/TestContainer";
+import Preloader from "./StyledComponents/Preloader";
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
             <Header>
                 <HeaderLogo src="images/Tempermeter-logo.svg" alt={"Tempermeter logo"}/>
                 <FAIcon icon = {faInfoCircle}  />
+
             </Header>
             <Main>
                 <Switch>
