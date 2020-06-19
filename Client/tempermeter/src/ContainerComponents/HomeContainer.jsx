@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import Home from "../Routes/Home";
+import Home from "../Components/Home";
 import updateUserInfoActionCreator from "../redux/action-creators/user-info-action-creators";
 
 const mapStateToProps = (state) => {
@@ -15,7 +15,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(updateUserInfoActionCreator(userInfo));
         }
     }
-}
+};
 
 const HomeContainer = connect(mapStateToProps, mapDispatchToProps)(Home);
 

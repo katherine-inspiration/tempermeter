@@ -5,7 +5,6 @@ import ResultsHistoryContainer from "../ContainerComponents/ResultsHistoryContai
 import {NavLink} from "react-router-dom";
 
 const Home = (props) => {
-    let [sessionId, setSessionId] = useState(null);
     const startSession = () => {
         return fetch('/api/session/start/' + props.user_id)
             .then(response => {
@@ -14,20 +13,9 @@ const Home = (props) => {
             .then(result => console.log(result))
             .catch(err => console.log(err));
     };
-    const getSessionId = () => {
-        return fetch('/api/session/' + props.user_id)
-            .then(response => response.json())
-            .then(result => {
-                console.log(result);
-                setSessionId(result);
-                return result;
-            })
-            .catch(err => console.log(err));
-    };
 
     const runTestHandler = () => {
-        startSession()
-            .then(() => getSessionId())
+        startSession();
     };
 
     return (
