@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "../Components/Button";
 import Title from "../Components/Title";
+import ResultHistory from "../Components/ResultsHistory";
 
 const Home = (props) => {
     return (
@@ -11,6 +12,7 @@ const Home = (props) => {
             <Title secondary>
                 История
             </Title>
+            <ResultHistory/>
         </div>
     );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Header from "./Components/Header";
 import HeaderLogo from "./Components/HeaderLogo";
-import InfoIcon from "./Components/InfoIcon";
+import FAIcon from "./Components/FAIcon";
 import {faInfoCircle} from "@fortawesome/free-solid-svg-icons";
 import Main from "./Components/Main";
 import { Route, Switch } from "react-router-dom";
@@ -14,7 +14,7 @@ function App() {
         <div>
             <Header>
                 <HeaderLogo src="images/Tempermeter-logo.svg" alt={"Tempermeter logo"}/>
-                <InfoIcon icon = {faInfoCircle}  />
+                <FAIcon icon = {faInfoCircle}  />
             </Header>
             <Main>
                 <Switch>
