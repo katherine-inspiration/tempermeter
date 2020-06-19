@@ -7,6 +7,7 @@ const Button = styled.button`
     border: 1px ${props => props.secondary? '#FD759C': '#2E753E'} solid;
     display: inline-block;
     font-size:20px;
+    text-decoration: none;
     :hover{
         cursor:pointer;
     }

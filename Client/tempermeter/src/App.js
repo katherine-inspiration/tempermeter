@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
-import Header from "./Components/Header";
-import HeaderLogo from "./Components/HeaderLogo";
-import FAIcon from "./Components/FAIcon";
+import Header from "./StyledComponents/Header";
+import HeaderLogo from "./StyledComponents/HeaderLogo";
+import FAIcon from "./StyledComponents/FAIcon";
 import {faInfoCircle} from "@fortawesome/free-solid-svg-icons";
-import Main from "./Components/Main";
+import Main from "./StyledComponents/Main";
 import { Route, Switch } from "react-router-dom";
-import Home from "./Routes/Home";
+import HomeContainer from "./ContainerComponents/HomeContainer";
 
 function App() {
 
@@ -18,7 +18,7 @@ function App() {
             </Header>
             <Main>
                 <Switch>
-                    <Route path={"/home"} render = {() => <Home/>} />
+                    <Route path={"/home"} render = {() => <HomeContainer/>} />
                 </Switch>
             </Main>
         </div>
