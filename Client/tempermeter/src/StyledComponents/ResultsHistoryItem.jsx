@@ -36,6 +36,7 @@ const ResultHistoryItem = styled(Item)`
     font-size: 17px;
     border-radius: 15px;
     display: inline-block;
+    margin: 10px auto;
     .date{
         color: '#4d4d4d';
         font-style: italic;

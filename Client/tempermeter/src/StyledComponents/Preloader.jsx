@@ -5,7 +5,7 @@ import React from "react";
 const LoaderImg = (props) => {
     return (
         <div>
-            <img className={props.className} {...props} src="../images/preloadergit .svg"/>
+            <img className={props.className} {...props} src="/images/preloader.svg"/>
         </div>
     );
 };

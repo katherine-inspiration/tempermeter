@@ -26,7 +26,7 @@ const Home = (props) => {
             <Title secondary>
                 История
             </Title>
-            <ResultsHistoryContainer/>
+            <ResultsHistoryContainer user_id={props.user_id} />
         </div>
     );
 };

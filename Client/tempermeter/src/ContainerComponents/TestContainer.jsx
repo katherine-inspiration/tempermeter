@@ -6,8 +6,8 @@ import updateQuestionsActionCreator from "../redux/action-creators/questions-act
 
 const mapStateToProps = (state) => {
     return {
-        ...state.sessionInfo,
-        ...state.userInfo
+        session_id: state.sessionInfo.session_id,
+        user_id: state.userInfo.user_id
     };
 };
 
@@ -17,7 +17,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(updateSessionIdActionCreator(session_id));
         },
         updateQuestions: (questions) => {
-            dispatch(updateQuestionsActionCreator(questions))
+            dispatch(updateQuestionsActionCreator(questions));
         },
     };
 };

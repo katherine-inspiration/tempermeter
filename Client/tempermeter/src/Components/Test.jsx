@@ -12,12 +12,15 @@ const Test = (props) => {
     let [questions, setQuestions] = useState([]);
     let [isFetching, setFetching] = useState(false);
     const getSessionId = () => {
+        setFetching(true);
         console.log('/api/session/' + props.user_id);
         return fetch('/api/session/' + props.user_id)
             .then(response => response.json())
             .then(result => {
                 console.log(result);
-                props.updateSessionId(result.session_id);
+                if (result)
+                    props.updateSessionId(result.session_id);
+                setFetching(false);
                 return result.session_id;
             })
             .catch(err => console.log(err));
@@ -34,7 +37,8 @@ const Test = (props) => {
             .then(result => {
                 console.log('questions result');
                 console.log(result);
-                props.updateQuestions(result);
+                if (result)
+                    props.updateQuestions(result);
                 setQuestions(result);
                 setFetching(false);
                 return result;
@@ -47,7 +51,7 @@ const Test = (props) => {
     }, [props.session_id]);
 
     if (!isInitialized){
-        getSessionId();
+        //getSessionId();
         getQuestions();
         setInitialized(true);
     }

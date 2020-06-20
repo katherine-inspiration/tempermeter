@@ -5,7 +5,7 @@ const updateUserInfoActionCreator = (userInfo) => {
     return {
         type: UPDATE_USER_INFO,
         userInfo: {
-            ...userInfo
+            user_id: userInfo.user_id
         }
     };
 };

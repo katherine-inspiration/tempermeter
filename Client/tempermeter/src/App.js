@@ -5,13 +5,13 @@ import HeaderLogo from "./StyledComponents/HeaderLogo";
 import FAIcon from "./StyledComponents/FAIcon";
 import {faInfoCircle} from "@fortawesome/free-solid-svg-icons";
 import Main from "./StyledComponents/Main";
-import { Route, Switch } from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import HomeContainer from "./ContainerComponents/HomeContainer";
 import TestContainer from "./ContainerComponents/TestContainer";
 import Preloader from "./StyledComponents/Preloader";
+import FullScreenLogo from "./StyledComponents/FullScreenLogo";
 
 function App() {
-
 
     return (
         <div>
@@ -30,5 +30,4 @@ function App() {
 
     );
 }
-
 export default App;

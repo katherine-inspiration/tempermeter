@@ -6,7 +6,8 @@ import {updateResultsHistoryActionCreator} from "../redux/action-creators/result
 
 let mapStateToProps = (state) => {
     return {
-        resultsHistory: state.resultsHistory
+        user_id:state.userInfo.user_id,
+        resultsHistory:state.resultsHistory,
     };
 };
 
