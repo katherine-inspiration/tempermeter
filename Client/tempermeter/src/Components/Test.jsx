@@ -8,13 +8,13 @@ import Pages from "../StyledComponents/Pages";
 
 const Test = (props) => {
 
-    let [isInitialized, setInitialized] = useState(false);
     let [sessionId, setSessionId] = useState(null);
     let [isLastQuestion, setIsLastQuestion] = useState(false);
     let [questions, setQuestions] = useState([]);
     let [isFetching, setFetching] = useState(false);
     let [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     let [chosenAnswerId, setChosenAnswerId] = useState(null);
+    let [isPrevButtonDisabled, setPrevButtonDisabled] = useState(false);
 
 
     const getSessionId = () => {
@@ -62,26 +62,34 @@ const Test = (props) => {
         if (questions)
             if (currentQuestionIndex < questions.length - 1) {
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
+                console.log('currentQuestionIndex')
+                console.log(currentQuestionIndex);
                 setChosenAnswerId(null);
             }
-    }
+    };
     const prevQuestionHandler = () => {
         if (questions)
             if (currentQuestionIndex > 0) {
                 setCurrentQuestionIndex(currentQuestionIndex - 1);
+                console.log('currentQuestionIndex')
+                console.log(currentQuestionIndex);
                 setChosenAnswerId(null);
             }
-    }
+    };
 
     useEffect(() => {
         setSessionId(props.session_id);
     }, [props.session_id]);
 
-    if (!isInitialized) {
+    useEffect(() => {
+        setPrevButtonDisabled(currentQuestionIndex === 0);
+    }, [currentQuestionIndex]);
+
+    useEffect(() => {
         getSessionId();
         getQuestions();
-        setInitialized(true);
-    }
+    }, [props]);
+
 
     let questionItems = questions.map(question => <Question primary session_id={props.session_id}
                                                             question_id={question.question_id}
@@ -104,10 +112,10 @@ const Test = (props) => {
                      chosenAnswerId={chosenAnswerId}/>
             {isFetching ? null :
                 <div>
-                    <Button onClick={prevQuestionHandler}>
+                    <Button onClick={prevQuestionHandler} disabled={isPrevButtonDisabled} >
                         Назад
                     </Button>
-                    <Button primary={currentQuestionIndex === questions.length - 1 ? true : false}
+                    <Button primary={currentQuestionIndex === questions.length - 1}
                             onClick={nextQuestionHandler}>
                         {currentQuestionIndex === questions.length - 1 ? 'Завершить тест' : 'Вперед'}
                     </Button>
