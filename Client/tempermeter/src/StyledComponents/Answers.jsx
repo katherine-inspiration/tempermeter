@@ -8,17 +8,27 @@ let Answers = (props) => {
     let [isFetching, setFetching] = useState(true);
     let [answerItems, setAnswerItems] = useState(null);
 
-    useEffect(() => {getAnswers(props.question_id)}, [props.question_id]);
     useEffect(() => {
-        if( answers){
+        getAnswers(props.question_id)
+
+    }, [props.question_id]);
+
+
+    useEffect(() => {
+        if (answers) {
             setAnswerItems(answers.map(answer => {
-                return <AnswerItem answer_id={answer.answer_id} answer_text={answer.answer_text}/>
+                return <AnswerItem answer_id={answer.answer_id} answer_text={answer.answer_text}
+                                   onClick={(event) => {
+                                       props.answerChoiceHandler(answer.answer_id);
+                                       console.log(answer.answer_id);
+                                   }}
+                                   chosen={answer.answer_id === +props.chosenAnswerId}
+                />
             }))
-        }
-        else{
+        } else {
             setAnswerItems(null);
         }
-    }, [answers]);
+    }, [answers, props.chosenAnswerId]);
 
     const getAnswers = (question_id) => {
         console.log("props");
@@ -37,8 +47,7 @@ let Answers = (props) => {
                     return result;
                 })
                 .catch(err => console.log(err));
-        }
-        else{
+        } else {
             return [];
         }
     };
