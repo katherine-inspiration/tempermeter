@@ -4,7 +4,7 @@ import Paragraph from "./Paragraph";
 
 let AnswerItem = (props) => {
     return (
-        <Paragraph>
+        <Paragraph secondary>
             {props.answer_text}
         </Paragraph>
     );
