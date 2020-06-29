@@ -54,7 +54,7 @@ let Answers = (props) => {
 
     return (
         <div>
-            {isFetching ? <Preloader/> : answerItems}
+            {isFetching||props.isChosenFetching ? <Preloader/> : answerItems}
         </div>
     );
 };
