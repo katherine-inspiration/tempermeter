@@ -5,10 +5,11 @@ import Button from "../StyledComponents/Button";
 import Preloader from "../StyledComponents/Preloader";
 import Answers from "../StyledComponents/Answers";
 import Pages from "../StyledComponents/Pages";
+import FinishConfirmWindow from "../StyledComponents/FinishComfirmWindow";
 
 const Test = (props) => {
 
-        let [sessionId, setSessionId] = useState(null);
+
         let [isLastQuestion, setIsLastQuestion] = useState(false);
         let [questions, setQuestions] = useState([]);
         let [isFetching, setFetching] = useState(false);
@@ -17,21 +18,27 @@ const Test = (props) => {
         let [isPrevButtonDisabled, setPrevButtonDisabled] = useState(false);
         let [isChosenAnswerFetching, setChosenAnswerFetching] = useState(false);
 
+        const isTheLastQuestion = () => {
+            return currentQuestionIndex === questions.length - 1;
+        }
+
 
         const getChosenAnswer = (question_id) => {
             setChosenAnswerFetching(true);
-            console.log("Trying to fetch chosen answers. Session id :" + sessionId +
+            console.log("Trying to fetch chosen answers. Session id :" + props.sessionId +
                 ', chosen answer id: ' + chosenAnswerId +
                 'question id: ' + question_id
             );
-            if (sessionId && !chosenAnswerId) {
+            if (+props.sessionId && !chosenAnswerId) {
                 console.log("Fetching chosen answer");
-                return fetch('/api/history/answers/' + sessionId + '/' + question_id)
+                return fetch('/api/history/answers/' + props.sessionId + '/' + question_id)
                     .then(response => response.json())
                     .then(result => {
                         console.log("Got the chosen answer from history");
                         console.log(result);
-                        setChosenAnswerId(result[0].answer_id);
+                        if (result.length > 0) {
+                            setChosenAnswerId(result[0].answer_id);
+                        }
                         setChosenAnswerFetching(false);
                         return result;
                     })
@@ -115,6 +122,7 @@ const Test = (props) => {
                     setCurrentQuestionIndex(currentQuestionIndex + 1);
                     setChosenAnswerId(null);
                 }
+
         };
         const prevQuestionHandler = () => {
             if (questions)
@@ -131,8 +139,12 @@ const Test = (props) => {
                 }
         };
 
+        const finishTestHandler = () => {
+            props.showFinishConfirmation(true);
+        };
+
         useEffect(() => {
-            setSessionId(props.session_id);
+            props.setSessionId(props.session_id);
         }, [props.session_id]);
 
         useEffect(() => {
@@ -153,7 +165,7 @@ const Test = (props) => {
                 getChosenAnswer(questions[currentQuestionIndex].question_id);
             }
 
-        }, [sessionId, currentQuestionIndex, questions]);
+        }, [props.sessionId, currentQuestionIndex, questions]);
 
         let questionItems = questions.map(question => <Question primary session_id={props.session_id}
                                                                 question_id={question.question_id}
@@ -179,8 +191,8 @@ const Test = (props) => {
                         <Button onClick={prevQuestionHandler} disabled={isPrevButtonDisabled}>
                             Назад
                         </Button>
-                        <Button primary={currentQuestionIndex === questions.length - 1}
-                                onClick={nextQuestionHandler}>
+                        <Button primary={isTheLastQuestion()}
+                                onClick={isTheLastQuestion()? finishTestHandler : nextQuestionHandler}>
                             {currentQuestionIndex === questions.length - 1 ? 'Завершить тест' : 'Вперед'}
                         </Button>
                     </div>

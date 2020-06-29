@@ -10,24 +10,38 @@ import HomeContainer from "./ContainerComponents/HomeContainer";
 import TestContainer from "./ContainerComponents/TestContainer";
 import Preloader from "./StyledComponents/Preloader";
 import FullScreenLogo from "./StyledComponents/FullScreenLogo";
+import FinishConfirmWindow from "./StyledComponents/FinishComfirmWindow";
 
 function App() {
 
+    let [isFinishConfirmationShown, setFinishConfirmationShown] = useState(false);
+    let [sessionId, setSessionId] = useState(null);
+
     return (
         <div>
+
+            {isFinishConfirmationShown ? <FinishConfirmWindow showFinishConfirmation={setFinishConfirmationShown}
+                                                              sessionId={sessionId}
+            /> : null}
+
             <Header>
                 <HeaderLogo src="images/Tempermeter-logo.svg" alt={"Tempermeter logo"}/>
-                <FAIcon icon = {faInfoCircle}  />
+                <FAIcon icon={faInfoCircle}/>
 
             </Header>
             <Main>
                 <Switch>
-                    <Route path={"/home"} render = {() => <HomeContainer/>} />
-                    <Route path={"/test/:question_id"} render={() => <TestContainer /> } />
+                    <Route path={"/home"} render={() => <HomeContainer/>}/>
+                    <Route path={"/test/:question_id"} render={() => <TestContainer
+                        showFinishConfirmation={setFinishConfirmationShown}
+                        setSessionId={setSessionId}
+                        sessionId={sessionId}
+                    />}/>
                 </Switch>
             </Main>
         </div>
 
     );
 }
+
 export default App;
