@@ -7,6 +7,7 @@ let FinishConfirmWindow = props => {
 
     const yesHandler = () => {
         props.showFinishConfirmation(false);
+        props.history.push('/result/' + props.sessionId);
 
     };
 
@@ -21,7 +22,7 @@ let FinishConfirmWindow = props => {
                 <Button secondary className={"no"} onClick={noHandler}>
                     Нет
                 </Button>
-                <Button as={NavLink}  to={'/result/' + props.sessionId} primary className={"yes"} onClick={yesHandler}>
+                <Button  primary className={"yes"} onClick={yesHandler}>
                     Да
                 </Button>
             </div>
