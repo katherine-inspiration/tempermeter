@@ -110,18 +110,24 @@ const Test = (props) => {
 
 
         const nextQuestionHandler = () => {
-            if (questions)
+            if (questions){
+                if (chosenAnswerId) {
+                    putAnswer({
+                        session_id: props.session_id,
+                        answer_id: chosenAnswerId,
+                        question_id: questions[currentQuestionIndex].question_id
+                    });
+                }
                 if (currentQuestionIndex < questions.length - 1) {
-                    if (chosenAnswerId) {
-                        putAnswer({
-                            session_id: props.session_id,
-                            answer_id: chosenAnswerId,
-                            question_id: questions[currentQuestionIndex].question_id
-                        });
-                    }
+
                     setCurrentQuestionIndex(currentQuestionIndex + 1);
                     setChosenAnswerId(null);
                 }
+                else{
+                    finishTestHandler();
+                }
+            }
+
 
         };
         const prevQuestionHandler = () => {
@@ -140,6 +146,7 @@ const Test = (props) => {
         };
 
         const finishTestHandler = () => {
+
             props.showFinishConfirmation(true);
         };
 
@@ -192,7 +199,7 @@ const Test = (props) => {
                             Назад
                         </Button>
                         <Button primary={isTheLastQuestion()}
-                                onClick={isTheLastQuestion()? finishTestHandler : nextQuestionHandler}>
+                                onClick={nextQuestionHandler}>
                             {currentQuestionIndex === questions.length - 1 ? 'Завершить тест' : 'Вперед'}
                         </Button>
                     </div>

@@ -11,6 +11,7 @@ import TestContainer from "./ContainerComponents/TestContainer";
 import Preloader from "./StyledComponents/Preloader";
 import FullScreenLogo from "./StyledComponents/FullScreenLogo";
 import FinishConfirmWindow from "./StyledComponents/FinishComfirmWindow";
+import Result from "./StyledComponents/Result";
 
 function App() {
 
@@ -32,11 +33,13 @@ function App() {
             <Main>
                 <Switch>
                     <Route path={"/home"} render={() => <HomeContainer/>}/>
-                    <Route path={"/test/:question_id"} render={() => <TestContainer
+                    <Route path={"/test/"} render={() => <TestContainer
                         showFinishConfirmation={setFinishConfirmationShown}
                         setSessionId={setSessionId}
                         sessionId={sessionId}
                     />}/>
+                    <Route path={'/result/:session_id'} render={(p) => <Result sessionId={p.match.params.session_id} />} />
+                    <Route render={() => <div>The page isn't found</div>} />
                 </Switch>
             </Main>
         </div>

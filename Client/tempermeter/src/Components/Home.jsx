@@ -20,7 +20,7 @@ const Home = (props) => {
 
     return (
         <div>
-            <Button primary as={NavLink} to={'/test/1'} onClick={runTestHandler}>
+            <Button primary as={NavLink} to={'/test/'} onClick={runTestHandler}>
                 Пройти тест
             </Button>
             <Title secondary>
