@@ -14,7 +14,6 @@ let FinishConfirmWindow = props => {
             .then(response => response.json())
             .then(result => {
                 console.log(result);
-                console.log("Props of FinishConfirmWindow");
                 history.push('/result/' + props.sessionId)
 
             })

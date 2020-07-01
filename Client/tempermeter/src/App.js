@@ -35,13 +35,13 @@ function App(props) {
             </Header>
             <Main>
                 <Switch>
-                    <Route path={"/home"} render={() => <HomeContainer/>}/>
-                    <Route path={"/test/"} render={() => <TestContainer
+                    <Route exact path={"/"} render={() => <HomeContainer/>}/>
+                    <Route exact path={"/test/"} render={() => <TestContainer
                         showFinishConfirmation={setFinishConfirmationShown}
                         setSessionId={setSessionId}
                         sessionId={sessionId}
                     />}/>
-                    <Route path={'/result/:session_id'} render={(p) => <Result sessionId={p.match.params.session_id} />} />
+                    <Route exact path={'/result/:session_id'} render={(p) => <Result sessionId={p.match.params.session_id} />} />
                     <Route render={() => <div>The page isn't found</div>} />
                 </Switch>
             </Main>
