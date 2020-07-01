@@ -2,17 +2,36 @@ import React from "react";
 import styled from "styled-components";
 import Button from "./Button";
 import {NavLink} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 
 let FinishConfirmWindow = props => {
 
+    const history = useHistory();
+
     const yesHandler = () => {
         props.showFinishConfirmation(false);
-        props.history.push('/result/' + props.sessionId);
+        fetch('/api/result/calculate/' + props.userId + "/"  + props.sessionId)
+            .then(response => response.json())
+            .then(result => {
+                console.log(result);
+                console.log("Props of FinishConfirmWindow");
+                history.push('/result/' + props.sessionId)
 
+            })
+            .catch(err => console.log(err));
     };
 
     const noHandler = () => {
         props.showFinishConfirmation(false);
+    };
+
+    const getAnswers = () => {
+        return fetch('/api/history/answers/' + props.sessionId)
+            .then(response => response.json())
+            .catch(err => {
+                console.log(err);
+                alert("Couldn't get answers from the server");
+            });
     };
 
     return (

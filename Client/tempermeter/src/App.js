@@ -12,8 +12,9 @@ import Preloader from "./StyledComponents/Preloader";
 import FullScreenLogo from "./StyledComponents/FullScreenLogo";
 import FinishConfirmWindow from "./StyledComponents/FinishComfirmWindow";
 import Result from "./StyledComponents/Result";
+import store from "./redux/store";
 
-function App() {
+function App(props) {
 
     let [isFinishConfirmationShown, setFinishConfirmationShown] = useState(false);
     let [sessionId, setSessionId] = useState(null);
@@ -23,6 +24,8 @@ function App() {
 
             {isFinishConfirmationShown ? <FinishConfirmWindow showFinishConfirmation={setFinishConfirmationShown}
                                                               sessionId={sessionId}
+                                                              userId={store.getState().userInfo.user_id}
+
             /> : null}
 
             <Header>
