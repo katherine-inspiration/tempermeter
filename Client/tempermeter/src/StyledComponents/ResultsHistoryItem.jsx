@@ -1,8 +1,24 @@
-import React from "react";
+import React, {useDebugValue, useEffect, useState} from "react";
 import styled from "styled-components";
 
 const Item = (props) => {
-    console.log(props);
+
+    const [resultNamesString, setResultNamesString] = useState("");
+
+    useEffect(() => {
+        console.log("Props from Results History Item");
+        console.log(props);
+        let resultNames = "";
+        if (props.result.length > 0) {
+            resultNames += props.result[0];
+            for (let i = 1; i < props.result.length; i++){
+                resultNames += " + " + props.result[i];
+            }
+        }
+        setResultNamesString(resultNames);
+    }, [props]);
+
+
     let options = {
         month: 'long',
         day: 'numeric',
@@ -14,7 +30,7 @@ const Item = (props) => {
     let date = new Date(props.date);
     let longDate = date.toLocaleTimeString('ru-RU', options);
 
-    return(
+    return (
         <div>
             <div className={props.className}>
                 <span className={"date"}>
@@ -22,7 +38,7 @@ const Item = (props) => {
                 </span>
                 <br/>
                 <span className={"result_name"}>
-                    {props.result_name}
+                    {resultNamesString}
                 </span>
             </div>
         </div>
@@ -31,7 +47,7 @@ const Item = (props) => {
 
 const ResultHistoryItem = styled(Item)`
     
-    border:1px ${props => props.primary? '#2E753E': '#FD759C'} solid;
+    border:1px ${props => props.primary ? '#2E753E' : '#FD759C'} solid;
     padding: 20px 40px;
     font-size: 17px;
     border-radius: 15px;
@@ -45,14 +61,14 @@ const ResultHistoryItem = styled(Item)`
         font-weight:bold;
     }
     :hover{
-        background-color: ${props => props.primary? '#2E753E': '#FD759C'};
+        background-color: ${props => props.primary ? '#2E753E' : '#FD759C'};
         color: white;
         cursor: pointer;
     }
 `;
 
 const render = () => (
-    <ResultHistoryItem />
+    <ResultHistoryItem/>
 )
 
 export default ResultHistoryItem

@@ -4,44 +4,58 @@ import Paragraph from "../StyledComponents/Paragraph";
 import Preloader from "../StyledComponents/Preloader";
 
 const ResultsHistory = (props) => {
-    let [isInitialized, setInitialized] = useState(false);
-    let [isHistoryFetching, setHistoryFetching] = useState(false);
-    let [resultsHistory, setResultsHistory] = useState([]);
+    const [isHistoryFetching, setHistoryFetching] = useState(false);
+    const [resultsHistory, setResultsHistory] = useState([]);
+    const [resultHistoryItems, setResultHistoryItems] = useState([]);
+    const [isInitialized, setInitialized] = useState(false);
 
     const updateHistory = () => {
-        setHistoryFetching(true);
-        console.log('fetching /api/history/results/' + props.user_id);
-        return fetch('/api/history/results/' + props.user_id)
-            .then(response => response.json())
-            .then(result => {
-                console.log('result');
-                console.log(result);
-                if (result)
-                    props.updateResultsHistory(result);
-                setInitialized(true);
-                setHistoryFetching(false);
-                setResultsHistory(result);
-                return result;
-            })
-            .catch(err => console.log(err));
+        if (!isInitialized) {
+            setHistoryFetching(true);
+            console.log('fetching /api/sessions/' + props.user_id);
+            return fetch('/api/sessions/' + props.user_id)
+                .then(response => response.json())
+                .then(result => {
+                    if (result) {
+                        props.updateResultsHistory(result);
+                    }
+                    console.log(result);
+                    setHistoryFetching(false);
+                    //setResultsHistory([...result]);
+                    return result;
+
+                })
+                .catch(err => console.log(err));
+        }
     };
 
-    if(!isInitialized) {
-        updateHistory();
-        setInitialized(true);
-    };
+    useEffect(() => {
+        setResultsHistory(props.resultsHistory);
+    }, [props.resultsHistory]);
 
 
-    let items = props.resultsHistory.length>0?
-        resultsHistory.map( item => <ResultHistoryItem {...item} key={item.session_id} /> ) :
-        (<Paragraph>
-            Ваша история пуста. Вы еще ни разу не проходили тест.
-        </Paragraph>)
-    ;
-    return(
-      <div>
-          {isHistoryFetching?<Preloader/>:items}
-      </div>
+    useEffect(() => {
+        updateHistory()
+    }, [isInitialized]);
+    useEffect(() => {
+        console.log("Getting history items");
+        console.log(resultsHistory);
+        if (resultsHistory.length > 0) {
+            setResultHistoryItems(resultsHistory.map(item => <ResultHistoryItem {...item} key={item.session_id}/>));
+            setInitialized(true);
+            console.log(resultHistoryItems);
+        } else {
+            setResultHistoryItems(
+                <Paragraph>
+                    Ваша история пуста. Вы еще ни разу не проходили тест.
+                </Paragraph>);
+        }
+    }, [resultsHistory, props.resultsHistory]);
+
+    return (
+        <div>
+            {isHistoryFetching ? <Preloader/> : resultHistoryItems}
+        </div>
     );
 };
 
