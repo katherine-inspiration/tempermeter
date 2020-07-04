@@ -2,12 +2,15 @@ import React, {useEffect, useState} from "react";
 import ResultHistoryItem from "../StyledComponents/ResultsHistoryItem";
 import Paragraph from "../StyledComponents/Paragraph";
 import Preloader from "../StyledComponents/Preloader";
+import {useHistory} from "react-router-dom";
 
 const ResultsHistory = (props) => {
     const [isHistoryFetching, setHistoryFetching] = useState(false);
     const [resultsHistory, setResultsHistory] = useState([]);
     const [resultHistoryItems, setResultHistoryItems] = useState([]);
     const [isInitialized, setInitialized] = useState(false);
+
+    const history = useHistory();
 
     const updateHistory = () => {
         if (!isInitialized) {
@@ -41,7 +44,12 @@ const ResultsHistory = (props) => {
         console.log("Getting history items");
         console.log(resultsHistory);
         if (resultsHistory.length > 0) {
-            setResultHistoryItems(resultsHistory.map(item => <ResultHistoryItem {...item} key={item.session_id}/>));
+            setResultHistoryItems(resultsHistory.map(item => <ResultHistoryItem {...item}
+                                                                                key={item.session_id}
+                                                                                onClick={() => {
+                                                                                    history.push('/result/' + item.session_id);
+                                                                                }}
+            />));
             setInitialized(true);
             console.log(resultHistoryItems);
         } else {

@@ -7,7 +7,7 @@ const Paragraph = styled.p`
     font-size: 18px;
     border-radius: 15px;
     padding: 20px;
-    
+    text-align: ${props => props.align === 'left'?'left':props.align === 'right'?'right':'center'};
 `;
 
 export default Paragraph;

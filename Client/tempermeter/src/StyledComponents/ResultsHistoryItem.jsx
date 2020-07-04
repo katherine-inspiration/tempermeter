@@ -31,7 +31,7 @@ const Item = (props) => {
     let longDate = date.toLocaleTimeString('ru-RU', options);
 
     return (
-        <div>
+        <div onClick={props.onClick}>
             <div className={props.className}>
                 <span className={"date"}>
                     {longDate}
