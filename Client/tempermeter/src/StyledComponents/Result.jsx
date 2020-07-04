@@ -9,13 +9,14 @@ import {useHistory} from "react-router-dom";
 let Result = (props) => {
     const [isFetching, setFetching] = useState(true);
     const [resultData, setResultData] = useState([]);
-    const [resultDataItems, setResultDataItems] = useState(null);
+    const [resultDataItems, setResultDataItems] = useState([]);
     const history = useHistory();
 
 
     const getResultNamesString = (result) => {
         let resultNames = "";
-        if (result) {
+        console.log(result);
+        if (result.length > 0) {
             resultNames += result[0].name;
             for (let i = 1; i < result.length; i++) {
                 resultNames += " + " + result[i].name;
@@ -49,13 +50,12 @@ let Result = (props) => {
                                     <b>{result.name}</b>
                                 </div>
                                 <TemperImage src={result.picture}/>
-                                <Paragraph align={'left'}>
+                                <Paragraph align={'left'} >
                                     {result.text}
                                 </Paragraph>
                             </>
                         );
                     }));
-                    setFetching(false);
                     return result;
                 }
             })
@@ -65,13 +65,21 @@ let Result = (props) => {
             })
     }, [props]);
 
+    useEffect(() => {
+        if (resultData){
+            setFetching(false);
+        }
+    }, [resultData]);
+
 
 return (
     <div>
-        <BackToHomeButton primary onClick={() => history.push("/")} >
+        <BackToHomeButton primary onClick={() =>
+            history.push("/")
+        } >
             Вернуться на главную
         </BackToHomeButton>
-        {isFetching ? <Preloader/> :
+        {isFetching || resultDataItems.length === 0 ? <Preloader/> :
             <div>
                 <Paragraph>`
                     Вы - {getResultNamesString(resultData)}
