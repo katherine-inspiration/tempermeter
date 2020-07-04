@@ -13,24 +13,31 @@ import FullScreenLogo from "./StyledComponents/FullScreenLogo";
 import FinishConfirmWindow from "./StyledComponents/FinishComfirmWindow";
 import Result from "./StyledComponents/Result";
 import store from "./redux/store";
+import About from "./StyledComponents/About";
 
 function App(props) {
 
-    let [isFinishConfirmationShown, setFinishConfirmationShown] = useState(false);
-    let [sessionId, setSessionId] = useState(null);
+    const [isFinishConfirmationShown, setFinishConfirmationShown] = useState(false);
+    const [sessionId, setSessionId] = useState(null);
+    const [isAboutShowed, showAbout] = useState(false);
+
 
     return (
-        <div>
+        <div onClick={() => {
+            if (isAboutShowed){
+                showAbout(false);
+            }
+        }}>
 
             {isFinishConfirmationShown ? <FinishConfirmWindow showFinishConfirmation={setFinishConfirmationShown}
                                                               sessionId={sessionId}
                                                               userId={store.getState().userInfo.user_id}
 
             /> : null}
-
+            {isAboutShowed? <About />:null}
             <Header>
                 <HeaderLogo src="images/Tempermeter-logo.svg" alt={"Tempermeter logo"}/>
-                <FAIcon icon={faInfoCircle}/>
+                <FAIcon icon={faInfoCircle} onClick={() => {showAbout(true);}} />
 
             </Header>
             <Main>
