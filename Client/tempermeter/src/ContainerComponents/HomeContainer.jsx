@@ -1,11 +1,11 @@
-import React from "react";
 import {connect} from "react-redux";
 import Home from "../Components/Home";
 import updateUserInfoActionCreator from "../redux/action-creators/user-info-action-creators";
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
     return {
-        ...state.userInfo
+        history: props.history,
+        user_id: props.user_id
     }
 };
 

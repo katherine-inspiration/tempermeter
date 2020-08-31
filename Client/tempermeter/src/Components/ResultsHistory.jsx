@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import ResultHistoryItem from "../StyledComponents/ResultsHistoryItem";
 import Paragraph from "../StyledComponents/Paragraph";
 import Preloader from "../StyledComponents/Preloader";
-import {useHistory} from "react-router-dom";
 
 const ResultsHistory = (props) => {
     const [isHistoryFetching, setHistoryFetching] = useState(false);
@@ -10,9 +9,7 @@ const ResultsHistory = (props) => {
     const [resultHistoryItems, setResultHistoryItems] = useState([]);
     const [isInitialized, setInitialized] = useState(false);
 
-    const history = useHistory();
-
-    const updateHistory = () => {
+    const updateHistory = useCallback(() => {
         if (!isInitialized) {
             setHistoryFetching(true);
             console.log('fetching /api/sessions/' + props.user_id);
@@ -30,7 +27,7 @@ const ResultsHistory = (props) => {
                 })
                 .catch(err => console.log(err));
         }
-    };
+    }, [isInitialized, props.user_id]);
 
     useEffect(() => {
         setResultsHistory(props.resultsHistory);
@@ -39,7 +36,8 @@ const ResultsHistory = (props) => {
 
     useEffect(() => {
         updateHistory()
-    }, [isInitialized]);
+    }, [isInitialized, updateHistory]);
+
     useEffect(() => {
         console.log("Getting history items");
         console.log(resultsHistory);
@@ -47,18 +45,17 @@ const ResultsHistory = (props) => {
             setResultHistoryItems(resultsHistory.map(item => <ResultHistoryItem {...item}
                                                                                 key={item.session_id}
                                                                                 onClick={() => {
-                                                                                    history.push('/result/' + item.session_id);
+                                                                                    props.history.push('/result/' + item.session_id);
                                                                                 }}
             />));
             setInitialized(true);
-            console.log(resultHistoryItems);
         } else {
             setResultHistoryItems(
                 <Paragraph>
                     Ваша история пуста. Вы еще ни разу не проходили тест.
                 </Paragraph>);
         }
-    }, [resultsHistory, props.resultsHistory]);
+    }, [resultsHistory, props.resultsHistory, props.history]);
 
     return (
         <div>

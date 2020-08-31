@@ -6,7 +6,6 @@ let AnswerItem = (props) => {
     let [chosen, setChosen] = useState(false);
     useEffect(()=> {
         setChosen(props.chosen);
-        console.log(props);
     }, [props.chosen]);
     return (
         <Paragraph secondary bold={chosen} className={props.className} onClick = {props.onClick} >

@@ -1,12 +1,11 @@
-import React from "react";
 import {connect} from "react-redux";
 import ResultsHistory from "../StyledComponents/ResultsHistory";
 import {updateResultsHistoryActionCreator} from "../redux/action-creators/results-history-action-creators";
 
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state, props) => {
     return {
-        user_id:state.userInfo.user_id,
+        user_id:props.user_id,
         resultsHistory:state.resultsHistory,
     };
 };

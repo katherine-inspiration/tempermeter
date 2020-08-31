@@ -1,15 +1,18 @@
-import React, {useState} from "react";
+import React from "react";
 import Button from "../StyledComponents/Button";
 import Title from "../StyledComponents/Title";
 import ResultsHistoryContainer from "../ContainerComponents/ResultsHistoryContainer";
 import {NavLink} from "react-router-dom";
 
 const Home = (props) => {
+
+
     const startSession = () => {
         return fetch('/api/session/start/' + props.user_id)
             .then(response => {
                 console.log(response);
-                return response.json()})
+                return response.json()
+            })
             .then(result => console.log(result))
             .catch(err => console.log(err));
     };
@@ -17,6 +20,7 @@ const Home = (props) => {
     const runTestHandler = () => {
         startSession();
     };
+
 
     return (
         <div>
@@ -26,7 +30,8 @@ const Home = (props) => {
             <Title secondary>
                 История
             </Title>
-            <ResultsHistoryContainer user_id={props.user_id} />
+            <ResultsHistoryContainer user_id={props.user_id}
+                                     history={props.history}/>}
         </div>
     );
 };
