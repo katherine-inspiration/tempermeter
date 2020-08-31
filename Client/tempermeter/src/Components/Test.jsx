@@ -1,16 +1,13 @@
-import React, {useEffect, useState} from "react";
-import {Route, Switch} from "react-router-dom";
+import React, {useEffect, useState, useCallback} from "react";
 import Question from "./Question";
 import Button from "../StyledComponents/Button";
 import Preloader from "../StyledComponents/Preloader";
 import Answers from "../StyledComponents/Answers";
 import Pages from "../StyledComponents/Pages";
-import FinishConfirmWindow from "../StyledComponents/FinishComfirmWindow";
 
 const Test = (props) => {
 
 
-        let [isLastQuestion, setIsLastQuestion] = useState(false);
         let [questions, setQuestions] = useState([]);
         let [isFetching, setFetching] = useState(false);
         let [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -85,9 +82,9 @@ const Test = (props) => {
                 .catch(err => console.log(err));
         };
 
-        const handleAnswerChoice = (answer_id) => {
+        const handleAnswerChoice = useCallback((answer_id) => {
             setChosenAnswerId(answer_id);
-        };
+        }, []);
 
         const putAnswer = (data) => {
             console.log('client put body');

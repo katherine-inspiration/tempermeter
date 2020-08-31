@@ -4,7 +4,6 @@ const initialState = [
 ];
 
 const resultsHistoryReducer = (state = initialState, action) => {
-    let stateCopy = [...state];
     switch(action.type){
         case UPDATE_RESULTS_HISTORY:
             return action.newState;

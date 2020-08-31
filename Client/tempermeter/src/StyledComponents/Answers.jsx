@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useCallback} from "react";
 import styled from "styled-components";
 import AnswerItem from "./AnswerItem";
 import Preloader from "./Preloader";
@@ -8,31 +8,8 @@ let Answers = (props) => {
     let [isFetching, setFetching] = useState(true);
     let [answerItems, setAnswerItems] = useState(null);
 
-    useEffect(() => {
-        getAnswers(props.question_id)
 
-    }, [props.question_id]);
-
-
-    useEffect(() => {
-        if (answers) {
-            setAnswerItems(answers.map(answer => {
-                return <AnswerItem answer_id={answer.answer_id} answer_text={answer.answer_text}
-                                   onClick={(event) => {
-                                       props.answerChoiceHandler(answer.answer_id);
-                                       console.log(answer.answer_id);
-                                   }}
-                                   chosen={answer.answer_id === +props.chosenAnswerId}
-                />
-            }))
-        } else {
-            setAnswerItems(null);
-        }
-    }, [answers, props.chosenAnswerId]);
-
-    const getAnswers = (question_id) => {
-        console.log("props");
-        console.log(props);
+    const getAnswers = useCallback((question_id) => {
         console.log("Fetching answers for question " + question_id);
         if (question_id) {
             return fetch('/api/answers/' + question_id)
@@ -50,7 +27,29 @@ let Answers = (props) => {
         } else {
             return [];
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        getAnswers(props.question_id)
+
+    }, [props.question_id, getAnswers]);
+
+
+    useEffect(() => {
+        if (answers) {
+            setAnswerItems(answers.map(answer => {
+                return <AnswerItem answer_id={answer.answer_id} answer_text={answer.answer_text}
+                                   onClick={(event) => {
+                                       props.answerChoiceHandler(answer.answer_id);
+                                       console.log(answer.answer_id);
+                                   }}
+                                   chosen={answer.answer_id === +props.chosenAnswerId}
+                />
+            }))
+        } else {
+            setAnswerItems(null);
+        }
+    }, [answers, props.chosenAnswerId, props.answerChoiceHandler]);
 
     return (
         <div>

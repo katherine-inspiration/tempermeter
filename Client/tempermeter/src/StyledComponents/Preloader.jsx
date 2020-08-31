@@ -1,11 +1,12 @@
 import styled from "styled-components";
-import Header from "./Header";
 import React from "react";
 
 const LoaderImg = (props) => {
     return (
         <div>
-            <img className={props.className} {...props} src="/images/preloader.svg"/>
+            <img alt={"Loading..."}
+                 className={props.className} {...props}
+                 src="/images/preloader.svg"/>
         </div>
     );
 };
