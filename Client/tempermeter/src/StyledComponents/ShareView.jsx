@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {getPostMediatopicURL} from "../Functions/okapi";
 import Paragraph from "./Paragraph";
+import Button from "./Button";
 
 const ShareView = (props) => {
 
@@ -12,18 +13,26 @@ const ShareView = (props) => {
         setShareURL(url);
     }, [props.mediatopicText, props.sessionSecretKey, props.sessionKey]);
 
-    return(
+    return (
         <div>
-            <Paragraph primary>
-                <iframe src = {shareURL}
-                        width={"500px"}
-                        height={"400px"}
-                        style={{
-                            border: "1px blue dashed",
-                            marginTop: "20px"
-                        }}>
-                    Can't show share iframe
-                </iframe>
+            <Paragraph secondary style={{textAlign: "center"}}>
+                <div style={{marginBottom: "20px"}}>
+
+                    {props.mediatopicText}
+                </div>
+                <Button secondary bold onClick={() => {
+                    fetch(shareURL)
+                        .then(() => {
+                            alert("Запись успешно опубликована");
+                            props.hideViewHandler();
+                        })
+                        .catch(err => {
+                            alert("Ошибка при публикации");
+                            console.log(err);
+                        });
+                }}>
+                    Опубликовать
+                </Button>
             </Paragraph>
         </div>
     );

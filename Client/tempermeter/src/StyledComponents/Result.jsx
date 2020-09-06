@@ -10,6 +10,7 @@ import {getPostMediatopicURL} from "../Functions/okapi";
 import ShareView from "./ShareView";
 
 let Result = (props) => {
+
         const [isFetching, setFetching] = useState(true);
         const [resultData, setResultData] = useState([]);
         const [resultDataItems, setResultDataItems] = useState([]);
@@ -30,10 +31,13 @@ let Result = (props) => {
             return resultNames;
         };
 
+        const showShareView = () => {
+            setShowShareIframe(true);
+        }
 
-        const shareResultHandler = () => {
-            setShowShareIframe(state => state);
-        };
+        const hideShareView = () => {
+            setShowShareIframe(false);
+        }
 
         useEffect(() => {
             setFetching(true);
@@ -99,7 +103,7 @@ let Result = (props) => {
                             {resultDataItems}
                             {/*<a target={"_self"} href={shareURL}>*/}
                             <div>
-                                <Button secondary bold onClick={shareResultHandler}>
+                                <Button secondary bold onClick={showShareView}>
                                     Поделиться
                                 </Button>
                             </div>
@@ -107,7 +111,8 @@ let Result = (props) => {
                             <div>
                                 {
                                     showShareIframe ?
-                                        <ShareView mediatopicText={mediatopicText}
+                                        <ShareView hideViewHandler={hideShareView}
+                                                   mediatopicText={mediatopicText}
                                                    sessionKey={props.sessionKey}
                                                    sessionSecretKey={props.sessionSecretKey}/>
                                     : null
