@@ -31,7 +31,7 @@ const Home = (props) => {
                 История
             </Title>
             <ResultsHistoryContainer user_id={props.user_id}
-                                     history={props.history}/>}
+                                     history={props.history}/>
         </div>
     );
 };

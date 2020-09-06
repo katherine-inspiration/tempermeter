@@ -62,7 +62,7 @@ function App(props) {
 
 
     return (
-        <div onClick={() => {
+        <div style={{height: "500px", overflowY: "scroll"}} onClick={() => {
             if (isAboutShowed) {
                 showAbout(false);
             }
@@ -70,7 +70,7 @@ function App(props) {
 
             {isFinishConfirmationShown ? <FinishConfirmWindow showFinishConfirmation={setFinishConfirmationShown}
                                                               sessionId={sessionId}
-                                                              userId={store.getState().userInfo.user_id}
+                                                              userId={sessionInfo.logged_user_id}
 
             /> : null}
             {isAboutShowed ? <About/> : null}
@@ -96,11 +96,16 @@ function App(props) {
                         />}/>
                         <Route exact path={'/result/:session_id'}
                                render={(p) => <Result sessionId={p.match.params.session_id}
+                                                      sessionKey={sessionInfo.session_key}
+                                                      sessionSecretKey={sessionInfo.session_secret_key}
                                                       history={history}
-                                                      user_id={sessionInfo.logged_user_id}/>}/>
+                                                      sig={sessionInfo.sig}
+                                                      user_id={sessionInfo.logged_user_id}
+                                                      webServer={sessionInfo.web_server}/>}/>
                         <Route render={() => <div>The page isn't found</div>}/>
                     </Switch>
-                    : <Preloader/>}
+                    : <Preloader/>
+                }
             </Main>
         </div>
 

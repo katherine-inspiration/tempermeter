@@ -17,7 +17,7 @@ const Test = (props) => {
 
         const isTheLastQuestion = () => {
             return currentQuestionIndex === questions.length - 1;
-        }
+        };
 
 
         const getChosenAnswer = (question_id) => {
@@ -163,7 +163,7 @@ const Test = (props) => {
 
         useEffect(() => {
             if (questions.length > 0 && currentQuestionIndex !== undefined) {
-                console.log('Getting chosen answer')
+                console.log('Getting chosen answer');
                 console.log(questions);
                 console.log(currentQuestionIndex);
                 getChosenAnswer(questions[currentQuestionIndex].question_id);
@@ -174,7 +174,7 @@ const Test = (props) => {
         let questionItems = questions.map(question => <Question primary session_id={props.session_id}
                                                                 question_id={question.question_id}
                                                                 question_text={question.question_text}
-                                                                questions_picture={question.question_picture}/>)
+                                                                questions_picture={question.question_picture}/>);
 
         return (
             <div>
